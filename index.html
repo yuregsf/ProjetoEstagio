@@ -6,17 +6,21 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Quiz Game</title>
     <link rel="stylesheet" href="app.css" />
+    <script src="game.js"></script>
   </head>
   <body>
     <div class="container">
-      <div id="home" class="flex-center flex-column">
+      <div id="app" class="flex-center flex-column">
         <h1>Quiz Game</h1>
-        <a class="btn" wm-link="game.html" wm-destino=".game2" >Iniciar Jogo</a>
+        <a class="btn" onclick="start()" >Iniciar Jogo</a>
       </div>
     </div>
-    <div class="game2"></div>
     <script>
-      function navegarViaAjax(url, seletor) {
+      function start(){
+        navegarViaAjax('game.html', '#app')
+        startGame()
+      }
+      async function navegarViaAjax(url, seletor) {
         if(!url || !seletor) return
         const elemento = document.querySelector(seletor)
         fetch(url)
@@ -25,17 +29,7 @@
             elemento.innerHTML = html
           })
       }
-      document.querySelectorAll('[wm-link]').forEach(link => {
-        const url = link.attributes['wm-link'].value
-        const seletorDestino = link.attributes['wm-destino'].value
-
-        link.onclick = e => {
-          e.preventDefault()
-          navegarViaAjax(url, seletorDestino)
-        }
-      })
     </script>
-    <script src="game.js"></script>
   </body>
 </html>
 
