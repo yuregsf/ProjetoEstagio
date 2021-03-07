@@ -7,7 +7,7 @@ let mistakes = 0;
 let questionCounter = 0;
 let availableQuesions = [];
 
-let questions = [
+/*let questions = [
   {
     question: " Em javascript, qual a diferença entre Set e Map?",
     choice1: "<script>",
@@ -48,15 +48,26 @@ let questions = [
     choice4: "Com a evolução e popularização de ferramentas javascript, tarefas antes mais complexas se tornaram mais simples e algumas vezes mais leves.Ajax passou a ser usado em larga escala para as mais diversas situações, e com o passar do tempo, o usuário ficava cada vez mais tempo na mesma página, sem nunca dar um refresh.",
     answer: 4
   }
-];
+];*/
 
 //CONSTANTS
 const MAX_QUESTIONS = 5;
 
-startGame = () => {
+function Ajax(url,callback) {
+  fetch(url)
+    .then(resp => resp.json())
+    .then(Test2 => callback(Test2))
+
+}
+
+
+  startGame = async () => {
   questionCounter = 0;
   mistakes = 0;
-  availableQuesions = [...questions];
+  await Ajax("questions.json", (questions) => {
+    availableQuesions = [...questions]
+  })
+  console.log(availableQuesions)
   getNewQuestion();
 };
 
@@ -72,7 +83,7 @@ getNewQuestion = () => {
   questionCounter++;
   const questionIndex = Math.floor(Math.random() * availableQuesions.length);
   currentQuestion = availableQuesions[questionIndex];
-  question.innerText = currentQuestion.question;
+  question.innerText = currentQuestion.title;
 
   choices.forEach(choice => {
     const number = choice.dataset["number"];
